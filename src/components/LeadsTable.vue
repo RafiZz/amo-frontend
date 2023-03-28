@@ -43,7 +43,7 @@ const searchTextMinLength = 3;
 const searchText = ref('');
 
 const validateSearchText = () => {
-  if (searchText.value.length < searchTextMinLength) {
+  if (searchText.value && searchText.value.length < searchTextMinLength) {
     searchTextError.value = `Минимальное количество символов: ${searchTextMinLength}`;
     return false;
   }
