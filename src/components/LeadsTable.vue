@@ -39,8 +39,23 @@ const formatDate = (n: number) => {
   return date.toLocaleString();
 };
 
+const searchTextMinLength = 3;
 const searchText = ref('');
+
+const validateSearchText = () => {
+  if (searchText.value.length < searchTextMinLength) {
+    searchTextError.value = `Минимальное количество символов: ${searchTextMinLength}`;
+    return false;
+  }
+  searchTextError.value = '';
+  return true;
+}
+
+const searchTextError = ref('');
 const onSearch = useThrottleFn(() => {
+  if (!validateSearchText()) {
+    return;
+  }
   emit('search', searchText.value);
 }, 1500);
 </script>
@@ -59,6 +74,7 @@ const onSearch = useThrottleFn(() => {
             enter-button
             @search="onSearch"
           />
+          <a-typography-text v-if="searchTextError" type="danger">{{ searchTextError }}</a-typography-text>
         </div>
       </div>
     </div>
