@@ -1,47 +1,49 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import { ref } from 'vue';
+import { message } from 'ant-design-vue';
+import 'ant-design-vue/es/message/style/css';
+
+import type { LeadWithContactsItem } from './mocks/leadsListResponse';
+import { getLeads } from './services/api/leads';
+
+const leads = ref<LeadWithContactsItem[]>([]);
+const leadsLoading = ref(false);
+
+const requestLeads = async ({ search }: { search: string } = { search: '' }) => {
+  const hideLoading = message.loading('Загрузка...', 0);
+  leadsLoading.value = true;
+  try {
+    const { data } = await getLeads({ search });
+    leads.value = data;
+  } catch (e) {
+    const hideError = message.error((e as Error).message, 0);
+    setTimeout(hideError, 2500);
+  } finally {
+    hideLoading();
+    leadsLoading.value = false;
+  }
+};
+
+requestLeads();
+
+const onSearch = (search: string) => {
+  requestLeads({ search });
+};
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <a-row>
+      <a-col :span="24">
+        <LeadsTable v-if="leads" :leads="leads" :loading="leadsLoading" @search="onSearch" />
+      </a-col>
+    </a-row>
   </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+<style>
+main {
+  width: 100%;
+  flex-grow: 1;
 }
 </style>
