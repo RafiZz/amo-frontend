@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { message } from 'ant-design-vue';
 import 'ant-design-vue/es/message/style/css';
 
-import type { LeadWithContactsItem } from './mocks/leadsListResponse';
+import type { LeadWithContactsItem } from './types/leadsListResponse';
 import { getLeads } from './services/api/leads';
 
 const leads = ref<LeadWithContactsItem[]>([]);

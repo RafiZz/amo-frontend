@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LeadWithContactsItem } from '@/mocks/leadsListResponse';
+import type { LeadWithContactsItem } from '@/types/leadsListResponse';
 
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons-vue';
 

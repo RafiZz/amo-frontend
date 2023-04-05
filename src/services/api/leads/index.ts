@@ -1,4 +1,4 @@
-import type { LeadsListResponseData } from '@/mocks/leadsListResponse';
+import type { LeadsListResponseData } from '@/types/leadsListResponse';
 import { AxiosHttpService } from '@/services/http/axios';
 
 export const getLeads = ({
@@ -21,6 +21,6 @@ export const getMockedLeads = async ({
 }): Promise<{ data: LeadsListResponseData }> => {
   console.log(`Mocked leads requested: `, { search });
   await new Promise((resolve) => setTimeout(resolve, 2000));
-  const jsonModule = await import('@/mocks/leadsListResponse.json');
+  const jsonModule = await import('@/fixtures/leadsListResponse.json');
   return { data: jsonModule.default };
 };

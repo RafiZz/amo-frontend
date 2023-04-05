@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { LeadWithContactsItem } from '@/mocks/leadsListResponse';
+import type { LeadWithContactsItem } from '@/types/leadsListResponse';
 
 import 'ant-design-vue/es/table/style/css';
 import { ref } from 'vue';
@@ -23,7 +23,7 @@ const columns = [
     key: 'name',
   },
   {
-    title: 'Цена',
+    title: 'Бюджет',
     dataIndex: 'price',
     key: 'price',
   },
